@@ -11,6 +11,9 @@ ul ,ol {
 a {
     text-decoration: none;
 }
+body {
+    height: 3000px;
+}
 
 button {
     margin: 50px;
@@ -29,5 +32,5 @@ section {
     position: absolute;
     left: 0%;
     top: 0%;
-    opacity: 0;
+    opacity: 1;
 }

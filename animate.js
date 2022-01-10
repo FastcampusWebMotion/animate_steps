@@ -2,16 +2,22 @@ const btn = document.querySelector('button');
 const box = document.querySelector('#box');
 
 btn.addEventListener('click', e=>{
-    animate(box, {
-        prop: 'opacity',
-        value: 1,
+    animate(window, {
+        prop: 'scroll',
+        value: 500,
         duration: 1000        
     });    
 })
 
 function animate(selector, option){
     const startTime= performance.now();
-    let currentValue = parseFloat(getComputedStyle(selector)[option.prop]);   
+    let currentValue= null;
+    if(option.prop==='scroll'){
+        currentValue = selector.scrollY;
+    }else{
+        currentValue = parseFloat(getComputedStyle(selector)[option.prop]); 
+    }
+      
 
     let isString = typeof option.value;
     if(isString === 'string') {
@@ -47,6 +53,9 @@ function animate(selector, option){
         }
         else if(option.prop === 'opacity'){
             selector.style[option.prop] = result;
+        }
+        else if(option.prop === 'scroll'){
+            window.scroll(0,result);
         }
         else{
             selector.style[option.prop] = `${result}px`;
