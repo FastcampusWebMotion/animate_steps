@@ -3,15 +3,15 @@ const box = document.querySelector('#box');
 
 btn.addEventListener('click', e=>{
     animate(box, {
-        prop: 'top',
-        value: '50%',
+        prop: 'opacity',
+        value: 1,
         duration: 1000        
     });    
 })
 
 function animate(selector, option){
     const startTime= performance.now();
-    let currentValue = parseInt(getComputedStyle(selector)[option.prop]);   
+    let currentValue = parseFloat(getComputedStyle(selector)[option.prop]);   
 
     let isString = typeof option.value;
     if(isString === 'string') {
@@ -20,15 +20,8 @@ function animate(selector, option){
         const x = ['margin-left','margin-right','left','right','width'];
         const y = ['margin-top','margin-bottom','top','bottom','height'];
 
-        for(let condition of x){
-            if(option.prop === condition) currentValue = (currentValue/parentW)*100;
-                
-                
-            
-        }
-        for(let condition of y){
-            if(option.prop === condition) currentValue = (currentValue/parentH)*100; 
-        }       
+        for(let condition of x) if(option.prop === condition) currentValue = (currentValue/parentW)*100;
+        for(let condition of y) if(option.prop === condition) currentValue = (currentValue/parentH)*100; 
         option.value = parseFloat(option.value);
     } 
 
@@ -52,12 +45,12 @@ function animate(selector, option){
         if(isString === 'string'){
             selector.style[option.prop] = `${result}%`;
         }
+        else if(option.prop === 'opacity'){
+            selector.style[option.prop] = result;
+        }
         else{
             selector.style[option.prop] = `${result}px`;
         }
-        
     }
-
-    
 }
 
