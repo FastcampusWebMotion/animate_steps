@@ -7,6 +7,20 @@
     <title>Animate</title>
     <link rel="stylesheet" href="style.css">
     <script defer src="animate.js"></script>
+    <script>
+        window.addEventListener('load',()=>{
+            const btn = document.querySelector('button');
+            const box = document.querySelector('#box');
+
+            btn.addEventListener('click',()=>{
+                new Animate(box,{
+                    prop: 'left',
+                    value: 300,
+                    duration: 2000
+                });
+            })         
+        })
+    </script>
 </head>
 <body>
    <button>button</button>
