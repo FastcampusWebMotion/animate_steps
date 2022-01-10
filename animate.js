@@ -3,10 +3,19 @@ const box = document.querySelector('#box');
 
 btn.addEventListener('click', e=>{
     animate(box, {
-        prop: 'margin-top',
+        prop: 'margin-left',
         value: 300,
-        duration: 1500
+        duration: 1000,
+        callback: ()=>{
+            animate(box, {
+                prop: 'margin-top',
+                value: 300,
+                duration: 1000
+            })
+        }
     });
+
+    
 })
 
 function animate(selector, option){
@@ -19,7 +28,11 @@ function animate(selector, option){
     
         if(progress < 0) progress = 0;
         if(progress > 1) progress = 1;
-        if(progress < 1) requestAnimationFrame(move); 
+        if(progress < 1){
+            requestAnimationFrame(move); 
+        }else{
+            if(option.callback) option.callback();
+        } 
        
         selector.style[option.prop] = `${option.value*progress}px`;
     }
