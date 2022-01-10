@@ -4,7 +4,7 @@ const box = document.querySelector('#box');
 btn.addEventListener('click', e=>{
     animate(box, {
         prop: 'margin-left',
-        value: 300,
+        value: 50,
         duration: 1000        
     });    
 })
@@ -12,6 +12,9 @@ btn.addEventListener('click', e=>{
 function animate(selector, option){
     const startTime= performance.now();
     const currentValue = parseInt(getComputedStyle(selector)[option.prop]);
+
+    let isString = typeof option.value;
+    if(isString === 'string') option.value = parseFloat(option.value);
 
     if(option.value === currentValue) return;    
     requestAnimationFrame(run);  
@@ -28,8 +31,15 @@ function animate(selector, option){
             if(option.callback) option.callback();
         } 
 
-        let result = currentValue + ((option.value-currentValue)*progress);       
-        selector.style[option.prop] = `${result}px`;
+        let result = currentValue + ((option.value-currentValue)*progress); 
+        
+        if(isString === 'string'){
+            selector.style[option.prop] = `${result}%`;
+        }
+        else{
+            selector.style[option.prop] = `${result}px`;
+        }
+        
     }
 
     
