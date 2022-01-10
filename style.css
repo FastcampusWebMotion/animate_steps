@@ -15,8 +15,18 @@ a {
 button {
     margin: 50px;
 }
+section {
+    width: 1000px;
+    height: 400px;
+    position: relative;
+    border: 1px solid #aaa;
+    margin: 0px auto;
+}
 #box {
-    width: 300px; 
-    height: 300px; 
+    width: 100px; 
+    height: 100px; 
     background: aqua;
+    position: absolute;
+    left: 10%;
+    top: 0%;
 }

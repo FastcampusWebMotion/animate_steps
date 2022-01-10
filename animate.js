@@ -3,18 +3,35 @@ const box = document.querySelector('#box');
 
 btn.addEventListener('click', e=>{
     animate(box, {
-        prop: 'margin-left',
-        value: 50,
+        prop: 'top',
+        value: '50%',
         duration: 1000        
     });    
 })
 
 function animate(selector, option){
     const startTime= performance.now();
-    const currentValue = parseInt(getComputedStyle(selector)[option.prop]);
+    let currentValue = parseInt(getComputedStyle(selector)[option.prop]);   
 
     let isString = typeof option.value;
-    if(isString === 'string') option.value = parseFloat(option.value);
+    if(isString === 'string') {
+        const x = ['margin-left','margin-right','left','right','width'];
+        const y = ['margin-top','margin-bottom','top','bottom','height'];
+
+        for(let condition of x){
+            if(option.prop === condition){
+                const parentW = parseInt(getComputedStyle(selector.parentElement).width);
+                currentValue = (currentValue/parentW)*100;
+            }
+        }
+        for(let condition of y){
+            if(option.prop === condition){
+                const parentH = parseInt(getComputedStyle(selector.parentElement).height);
+                currentValue = (currentValue/parentH)*100;
+            }
+        }       
+        option.value = parseFloat(option.value);
+    } 
 
     if(option.value === currentValue) return;    
     requestAnimationFrame(run);  
