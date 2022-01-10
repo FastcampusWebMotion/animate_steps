@@ -5,36 +5,33 @@ btn.addEventListener('click', e=>{
     animate(box, {
         prop: 'margin-left',
         value: 300,
-        duration: 1000,
-        callback: ()=>{
-            animate(box, {
-                prop: 'margin-top',
-                value: 300,
-                duration: 1000
-            })
-        }
-    });
-
-    
+        duration: 1000        
+    });    
 })
 
 function animate(selector, option){
     const startTime= performance.now();
-    requestAnimationFrame(move);
+    const currentValue = parseInt(getComputedStyle(selector)[option.prop]);
+
+    if(option.value === currentValue) return;    
+    requestAnimationFrame(run);  
     
-    function move(time){
+    function run(time){
         let timeLast = time - startTime;
         let progress = timeLast/option.duration;
     
         if(progress < 0) progress = 0;
         if(progress > 1) progress = 1;
         if(progress < 1){
-            requestAnimationFrame(move); 
+            requestAnimationFrame(run); 
         }else{
             if(option.callback) option.callback();
         } 
-       
-        selector.style[option.prop] = `${option.value*progress}px`;
+
+        let result = currentValue + ((option.value-currentValue)*progress);       
+        selector.style[option.prop] = `${result}px`;
     }
+
+    
 }
 
