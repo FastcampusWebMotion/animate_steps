@@ -1,5 +1,6 @@
 const btn = document.querySelector('button');
 const box = document.querySelector('#box');
+const speed = 1000;
 let num = 0;
 let startTime = null;
 
@@ -10,13 +11,10 @@ btn.addEventListener('click', e=>{
 
 function move(time){
     let timeLast = time - startTime;
-    if(num < 100){
-        num++;        
+    let progress = timeLast/speed;
+    if(progress < 1){
         requestAnimationFrame(move);
-        console.log(`반복횟수: ${num}`);
-        console.log(`회차별 누적시간: ${timeLast}`);
-    }
-    else {
-        
+        console.log(num++);
+        console.log(progress);
     }
 }
