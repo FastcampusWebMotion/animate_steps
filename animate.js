@@ -1,20 +1,27 @@
 const btn = document.querySelector('button');
 const box = document.querySelector('#box');
-const speed = 1000;
-let num = 0;
-let startTime = null;
 
 btn.addEventListener('click', e=>{
-    requestAnimationFrame(move);
-    startTime= performance.now();
+    animate(box, {
+        prop: 'margin-top',
+        value: 300,
+        duration: 1500
+    });
 })
 
-function move(time){
-    let timeLast = time - startTime;
-    let progress = timeLast/speed;
-    if(progress < 1){
-        requestAnimationFrame(move);
-        console.log(num++);
-        console.log(progress);
+function animate(selector, option){
+    const startTime= performance.now();
+    requestAnimationFrame(move);
+    
+    function move(time){
+        let timeLast = time - startTime;
+        let progress = timeLast/option.duration;
+    
+        if(progress < 0) progress = 0;
+        if(progress > 1) progress = 1;
+        if(progress < 1) requestAnimationFrame(move); 
+       
+        selector.style[option.prop] = `${option.value*progress}px`;
     }
 }
+
